@@ -10,7 +10,7 @@ import Contact from "./pages/Contact";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Collection from "./pages/Collection";
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 import SearchBar from "./components/SearchBar";
 import { ToastContainer, toast } from "react-toastify";
 

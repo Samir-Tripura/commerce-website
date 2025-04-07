@@ -1,16 +1,25 @@
-import React from 'react'
-import { ShopContext } from '../context/Shopcontext';
-import {useState, useContext, useEffect} from 'react';
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { assets } from '../assets/assets';
 import { useLocation } from 'react-router-dom';
+
+export const ShopContext = createContext();
+
+export const ShopProvider = ({ children }) => {
+  const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+
+  return (
+    <ShopContext.Provider value={{ search, setSearch, showSearch, setShowSearch }}>
+      {children}
+    </ShopContext.Provider>
+  );
+};
 
 const SearchBar = () => {
 
     const { search, setSearch, showSearch, setShowSearch} = useContext(ShopContext);
     const [visible, setVisible] = useState(false)
     const location = useLocation()
-
-
 
     useEffect(()=>{
       if(location.pathname.includes('collection') ){
@@ -20,9 +29,6 @@ const SearchBar = () => {
         setVisible(false)
       }
     },[location])
-
-
-
 
   return showSearch && visible ? (
     <div className="border-t border-b bg-gray-50 text-center p-5 mb-10">
@@ -41,4 +47,4 @@ const SearchBar = () => {
   ) : null;
 }
 
-export default SearchBar
+export default SearchBar;

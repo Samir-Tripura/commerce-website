@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
-
-export const ShopContext = React.createContext();
+import { ShopContext } from "../context/Shopcontext";
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");

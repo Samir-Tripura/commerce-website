@@ -3,6 +3,21 @@ import Title from "../components/Title";
 import CartTotal from "../components/CartTotal";
 import { assets } from "../assets/assets";
 import { ShopContext } from "../components/SearchBar";
+import { ShopProvider } from "./components/SearchBar";
+
+const App = () => {
+  return (
+    <ShopProvider>
+      <div className="px-2 sm:px-[1vw] lg:px-[9vw]">
+        <ToastContainer />
+        <Navbar />
+        <SearchBar />
+        <Routes>{/* Routes here */}</Routes>
+        <Footer />
+      </div>
+    </ShopProvider>
+  );
+};
 
 const PlaceOrder = () => {
   const [method, setMethod] = useState("cod");
@@ -129,3 +144,4 @@ const PlaceOrder = () => {
 };
 
 export default PlaceOrder;
+export { App };

@@ -1,38 +1,44 @@
-import React, { useContext,useState,useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { ShopContext } from '../context/Shopcontext';
-import { assets } from '../assets/assets';
-import RelatedProducts from '../components/RelatedProducts';
+import React, { useContext, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { ShopContext } from "../context/Shopcontext";
+import { assets } from "../assets/assets";
+import RelatedProducts from "../components/RelatedProducts";
+import { ShopProvider } from "./components/SearchBar";
 
+const App = () => {
+  return (
+    <ShopProvider>
+      <div className="px-2 sm:px-[1vw] lg:px-[9vw]">
+        <ToastContainer />
+        <Navbar />
+        <SearchBar />
+        <Routes>{/* Routes here */}</Routes>
+        <Footer />
+      </div>
+    </ShopProvider>
+  );
+};
 
 const Product = () => {
+  const { productId } = useParams();
+  const { products, currency, addToCart } = useContext(ShopContext);
+  const [productData, setProductData] = useState(false);
+  const [image, setImage] = useState("");
+  const [size, setSize] = useState("");
 
-  const{productId}= useParams();
- const{products,currency, addToCart} = useContext(ShopContext);
- const[productData, setProductData] = useState(false);
- const[image,setImage]= useState('')
- const[size,setSize] = useState('')
+  const fetchProductData = async () => {
+    products.map((item) => {
+      if (item.id === productId) {
+        setProductData(item);
+        setImage(item.image[0]);
+        return null;
+      }
+    });
+  };
 
-
- const fetchProductData = async () =>{
-  products.map((item)=>{
-    if(item.id === productId){
-      setProductData(item)
-      setImage(item.image[0])
-      return null;
-    }
-  })
-
- }
-
- useEffect(()=>{
-  fetchProductData();
- },[productId,])
-
-
-
-
-
+  useEffect(() => {
+    fetchProductData();
+  }, [productId]);
 
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 ">
@@ -93,7 +99,7 @@ const Product = () => {
             </div>
           </div>
           <button
-            onClick={()=>addToCart(productData.id, size)}
+            onClick={() => addToCart(productData.id, size)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-green-700"
           >
             ADD TO CART
@@ -132,6 +138,7 @@ const Product = () => {
   ) : (
     <div className="opacity-0"></div>
   );
-}
+};
 
-export default Product
+export default Product;
+export { App };
